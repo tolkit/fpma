@@ -1,3 +1,5 @@
 /target
 /hmm_tables
 /mitome
+# too big!
+fastas/nuc_alignments/*
