@@ -19,12 +19,12 @@ OPTIONAL ARGS:
                   HMM files. The default is \"./fastas/hmms/\",
                   as generated in this repo.
   --plot          Generate an SVG plot of where the annotated
-                  genes occur.
+                  genes occur. Requires a name, no default.
   --e-value       The E-value cut-off determining presence of
                   mito gene. <default 0.001>
                   
 EXAMPLE:
-  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer
+  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --plot output > output.tsv
 ";
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -59,8 +59,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let plot_data = table_parser.filter_table_and_print(e_value)?;
 
-    if args.plot {
-        plot_data.plot()?
+    if args.plot.is_some() {
+        plot_data.plot(&args.plot.unwrap())?
     }
 
     Ok(())
@@ -72,7 +72,7 @@ struct AppArgs {
     path_to_nhmmer: std::path::PathBuf,
     path_to_hmms: Option<std::path::PathBuf>,
     e_value: Option<f32>,
-    plot: bool,
+    plot: Option<String>,
 }
 
 fn parse_args() -> Result<AppArgs, pico_args::Error> {
@@ -84,14 +84,12 @@ fn parse_args() -> Result<AppArgs, pico_args::Error> {
         std::process::exit(0);
     }
 
-    let plot = pargs.contains("--plot");
-
     let args = AppArgs {
         mitochondrial_genome: pargs.value_from_os_str("--plant-mito", parse_path)?,
         path_to_nhmmer: pargs.value_from_os_str("--nhmmer-path", parse_path)?,
         path_to_hmms: pargs.opt_value_from_os_str("--hmms-path", parse_path)?,
         e_value: pargs.opt_value_from_fn("--e-value", parse_f32)?,
-        plot,
+        plot: pargs.opt_value_from_str("--plot")?,
     };
 
     // It's up to the caller what to do with the remaining arguments.

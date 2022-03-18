@@ -232,9 +232,7 @@ impl Nhmmer {
     ///
     /// Critically, the output is then sorted by target name, query name
     /// and then E-value.
-    pub fn read_tables_and_parse(
-        &mut self,
-    ) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn read_tables_and_parse(&mut self) -> Result<(), Box<dyn std::error::Error>> {
         // this gets all the files in the table path directory
         let tables = fs::read_dir(TABLE_PATH)?;
 
@@ -281,7 +279,7 @@ impl Nhmmer {
         });
 
         // now remove the ./hmm_tables dir and contents
-        fs::remove_dir_all(TABLE_PATH)?;
+        // fs::remove_dir_all(TABLE_PATH)?;
 
         Ok(())
     }
@@ -318,6 +316,7 @@ impl Nhmmer {
                     env_to: e.env_to,
                     strand: e.strand,
                     e_value: e.e_value,
+                    seq_len: e.sq_len,
                 });
             } else if e.query_name == current_gene {
                 () // can't continue in a closure?
@@ -328,6 +327,7 @@ impl Nhmmer {
                     env_to: e.env_to,
                     strand: e.strand,
                     e_value: e.e_value,
+                    seq_len: e.sq_len,
                 });
                 current_gene = e.query_name;
             }

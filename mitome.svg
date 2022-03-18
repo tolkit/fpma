@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8'  standalone='no' ?> <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN' 'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'> <svg version='1.0' width='1200' height='200' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'> <style type='text/css'> <!-- no styling yet -->
+             </style> <defs>
+                <!-- This is an arrow pointer --> 
+                <marker id='right_point' viewBox='0 0 10 10'
+                    refX='1' refY='5'
+                    markerUnits='strokeWidth'
+                    markerWidth='3' markerHeight='3'
+                    orient='auto'>
+                    <path d='M 0 0 L 10 5 L 0 10 z' fill='#f00'/>
+                </marker>
+            </defs>
+                <line x1='30' y1='170' x2='1170' y2='170' stroke='black' style = 'stroke-width: 3;' />
+<text x='30' y='25' class='small'>Malus_sylvestris-mito_chloro.drMalSylv7-MW057419.2.NC_053735.1.fasta.BOTH.HiFiMapped.bam.filtered.5k</text>
+            <line x1='160.5371' y1='160' x2='165.0006' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Atp1</title>
+            </line>
+            
+            <line x1='656.62305' y1='120' x2='654.8067' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Atp4</title>
+            </line>
+            
+            <line x1='860.1816' y1='120' x2='857.62463' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Atp6</title>
+            </line>
+            
+            <line x1='746.89294' y1='160' x2='748.43896' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Atp8</title>
+            </line>
+            
+            <line x1='456.57056' y1='120' x2='455.36807' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Atp9</title>
+            </line>
+            
+            <line x1='434.8894' y1='120' x2='433.135' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>CcmB</title>
+            </line>
+            
+            <line x1='410.27115' y1='120' x2='407.81833' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>CcmC</title>
+            </line>
+            
+            <line x1='502.1575' y1='160' x2='508.0938' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>CcmF</title>
+            </line>
+            
+            <line x1='599.92664' y1='160' x2='603.4158' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Cob</title>
+            </line>
+            
+            <line x1='620.4447' y1='160' x2='625.18134' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Cox1</title>
+            </line>
+            
+            <line x1='669.88403' y1='120' x2='667.0905' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Cox2</title>
+            </line>
+            
+            <line x1='750.0019' y1='160' x2='752.2379' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Cox3</title>
+            </line>
+            
+            <line x1='1108.4231' y1='160' x2='1114.382' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>MatR</title>
+            </line>
+            
+            <line x1='627.34973' y1='160' x2='629.8082' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>MttB</title>
+            </line>
+            
+            <line x1='540.54926' y1='160' x2='541.7996' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Nad1</title>
+            </line>
+            
+            <line x1='1088.3416' y1='160' x2='1090.1044' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Nad2</title>
+            </line>
+            
+            <line x1='225.76627' y1='160' x2='226.90117' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Nad3</title>
+            </line>
+            
+            <line x1='339.53085' y1='120' x2='332.74405' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Nad4</title>
+            </line>
+            
+            <line x1='452.17462' y1='120' x2='448.66293' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Nad5</title>
+            </line>
+            
+            <line x1='168.54887' y1='160' x2='170.49199' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Nad6</title>
+            </line>
+            
+            <line x1='149.36' y1='160' x2='150.84691' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Nad7</title>
+            </line>
+            
+            <line x1='951.8652' y1='120' x2='950.0235' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Nad9</title>
+            </line>
+            
+            <line x1='594.5901' y1='160' x2='596.38684' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rpl5</title>
+            </line>
+            
+            <line x1='961.4371' y1='160' x2='963.6647' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rpl10</title>
+            </line>
+            
+            <line x1='874.97174' y1='120' x2='873.42566' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rpl16</title>
+            </line>
+            
+            <line x1='127.96895' y1='160' x2='129.9205' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rps1</title>
+            </line>
+            
+            <line x1='739.74567' y1='160' x2='744.5359' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rps3</title>
+            </line>
+            
+            <line x1='122.93659' y1='160' x2='126.14412' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rps4</title>
+            </line>
+            
+            <line x1='226.32104' y1='160' x2='228.098' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rps12</title>
+            </line>
+            
+            <line x1='1032.4478' y1='160' x2='1033.4784' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rps13</title>
+            </line>
+            
+            <line x1='596.06573' y1='160' x2='596.89374' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rps14</title>
+            </line>
+            
+            <line x1='739.5626' y1='160' x2='740.0076' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Rps19</title>
+            </line>
+            
+            <line x1='190.6186' y1='120' x2='189.49779' y2='120' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Sdh3</title>
+            </line>
+            
+            <line x1='751.98444' y1='160' x2='753.2038' y2='160' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)'>
+                <title>Sdh4</title>
+            </line>
+            <text x='30' y='185' class='small'>0 bp</text>
+<text x='227.99944' y='185' class='small'>80963 bp</text>
+<text x='455.99887' y='185' class='small'>161926 bp</text>
+<text x='684.0011' y='185' class='small'>242890 bp</text>
+<text x='912.00055' y='185' class='small'>323853 bp</text>
+<text x='1140' y='185' class='small'>404816 bp</text>
+
+                </svg>
