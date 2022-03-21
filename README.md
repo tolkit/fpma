@@ -29,17 +29,17 @@ FLAGS:
 ARGS:
   --plant-mito    Path to the plant mitochondrial genome
   --nhmmer-path   Path to the nhmmer executable (HMMER3)
-OPTIONAL ARGS:
   --hmms-path     Path to the directory containing all the
-                  HMM files. The default is "./fastas/hmms/",
-                  as generated in this repo.
+                  HMM files. Download from:
+                  https://github.com/tolkit/fpma
+OPTIONAL ARGS:
   --plot          Generate an HTML SVG of where the annotated
                   genes occur. Requires a name, no default.
   --e-value       The E-value cut-off determining presence of
                   mito gene. <default 0.001>
                   
 EXAMPLE:
-  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --plot output > output.tsv
+  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./angiosperm_hmms/
 ```
 
 Optionally an HTML plot is created. Please see the <b><a href="https://tolkit.github.io/fpma/">the docs</a></b> for more detail on behind the scenes, and for a <b><a href="https://tolkit.github.io/fpma/fpma/mitome.html">HTML plot preview.</a></b>
@@ -53,7 +53,3 @@ In the case of the crab apple mitochondrial genome, we see absence of the follow
 - rps7 (known to be absent in apples)
 - rps8 (absent in angiosperms)
 - rps10/11 (known to be absent in mitochondrial genome in apples, but present in nuclear DNA.)
-
-## Plans
-
-- Make more general for Liverworts, Hornworts, Mosses, Lycopods, Ferns, and Gymnosperms.

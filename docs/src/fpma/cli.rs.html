@@ -90,17 +90,17 @@ FLAGS:
 ARGS:
   --plant-mito    Path to the plant mitochondrial genome
   --nhmmer-path   Path to the nhmmer executable (HMMER3)
-OPTIONAL ARGS:
   --hmms-path     Path to the directory containing all the
-                  HMM files. The default is \&quot;./fastas/hmms/\&quot;,
-                  as generated in this repo.
+                  HMM files. Download from:
+                  https://github.com/tolkit/fpma
+OPTIONAL ARGS:
   --plot          Generate an HTML SVG of where the annotated
                   genes occur. Requires a name, no default.
   --e-value       The E-value cut-off determining presence of
                   mito gene. &lt;default 0.001&gt;
                   
 EXAMPLE:
-  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --plot output &gt; output.tsv
+  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./angiosperm_hmms/
 &quot;</span>;
 
 <span class="doccomment">/// A `pico-args` struct to parse the command line args.</span>
@@ -108,7 +108,7 @@ EXAMPLE:
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AppArgs</span> {
     <span class="kw">pub</span> <span class="ident">mitochondrial_genome</span>: <span class="ident">std::path::PathBuf</span>,
     <span class="kw">pub</span> <span class="ident">path_to_nhmmer</span>: <span class="ident">std::path::PathBuf</span>,
-    <span class="kw">pub</span> <span class="ident">path_to_hmms</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">std::path::PathBuf</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">path_to_hmms</span>: <span class="ident">std::path::PathBuf</span>,
     <span class="kw">pub</span> <span class="ident">e_value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">plot</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
@@ -131,7 +131,7 @@ EXAMPLE:
     <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">AppArgs</span> {
         <span class="ident">mitochondrial_genome</span>: <span class="ident">pargs</span>.<span class="ident">value_from_os_str</span>(<span class="string">&quot;--plant-mito&quot;</span>, <span class="ident">parse_path</span>)<span class="question-mark">?</span>,
         <span class="ident">path_to_nhmmer</span>: <span class="ident">pargs</span>.<span class="ident">value_from_os_str</span>(<span class="string">&quot;--nhmmer-path&quot;</span>, <span class="ident">parse_path</span>)<span class="question-mark">?</span>,
-        <span class="ident">path_to_hmms</span>: <span class="ident">pargs</span>.<span class="ident">opt_value_from_os_str</span>(<span class="string">&quot;--hmms-path&quot;</span>, <span class="ident">parse_path</span>)<span class="question-mark">?</span>,
+        <span class="ident">path_to_hmms</span>: <span class="ident">pargs</span>.<span class="ident">value_from_os_str</span>(<span class="string">&quot;--hmms-path&quot;</span>, <span class="ident">parse_path</span>)<span class="question-mark">?</span>,
         <span class="ident">e_value</span>: <span class="ident">pargs</span>.<span class="ident">opt_value_from_fn</span>(<span class="string">&quot;--e-value&quot;</span>, <span class="ident">parse_f32</span>)<span class="question-mark">?</span>,
         <span class="ident">plot</span>: <span class="ident">pargs</span>.<span class="ident">opt_value_from_str</span>(<span class="string">&quot;--plot&quot;</span>)<span class="question-mark">?</span>,
     };

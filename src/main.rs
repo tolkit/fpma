@@ -15,10 +15,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mitochondrial_genome_path = args.mitochondrial_genome;
     let nhmmer_path = args.path_to_nhmmer;
     // otherwise default to what's in this repo.
-    let path_to_hmms = match args.path_to_hmms {
-        Some(p) => p,
-        None => std::path::PathBuf::from("./fastas/hmms/"),
-    };
+    let path_to_hmms = args.path_to_hmms;
     // default value 0.001
     let e_value = match args.e_value {
         Some(e) => e,

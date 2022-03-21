@@ -11,17 +11,17 @@ FLAGS:
 ARGS:
   --plant-mito    Path to the plant mitochondrial genome
   --nhmmer-path   Path to the nhmmer executable (HMMER3)
-OPTIONAL ARGS:
   --hmms-path     Path to the directory containing all the
-                  HMM files. The default is \"./fastas/hmms/\",
-                  as generated in this repo.
+                  HMM files. Download from:
+                  https://github.com/tolkit/fpma
+OPTIONAL ARGS:
   --plot          Generate an HTML SVG of where the annotated
                   genes occur. Requires a name, no default.
   --e-value       The E-value cut-off determining presence of
                   mito gene. <default 0.001>
                   
 EXAMPLE:
-  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --plot output > output.tsv
+  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./angiosperm_hmms/
 ";
 
 /// A `pico-args` struct to parse the command line args.
@@ -29,7 +29,7 @@ EXAMPLE:
 pub struct AppArgs {
     pub mitochondrial_genome: std::path::PathBuf,
     pub path_to_nhmmer: std::path::PathBuf,
-    pub path_to_hmms: Option<std::path::PathBuf>,
+    pub path_to_hmms: std::path::PathBuf,
     pub e_value: Option<f32>,
     pub plot: Option<String>,
 }
@@ -52,7 +52,7 @@ pub fn parse_args() -> Result<AppArgs, pico_args::Error> {
     let args = AppArgs {
         mitochondrial_genome: pargs.value_from_os_str("--plant-mito", parse_path)?,
         path_to_nhmmer: pargs.value_from_os_str("--nhmmer-path", parse_path)?,
-        path_to_hmms: pargs.opt_value_from_os_str("--hmms-path", parse_path)?,
+        path_to_hmms: pargs.value_from_os_str("--hmms-path", parse_path)?,
         e_value: pargs.opt_value_from_fn("--e-value", parse_f32)?,
         plot: pargs.opt_value_from_str("--plot")?,
     };

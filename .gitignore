@@ -1,7 +1,5 @@
 /target
 /mitome
-# too big!
-/fastas/nuc_alignments/*
 Mower*
-/fastas/fastas/*
-/fastas/fna_alignments/*
+# ignore anything with digits in the fasta dir
+/fastas/[0-9]*
