@@ -42,7 +42,7 @@ EXAMPLE:
   fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --plot output > output.tsv
 ```
 
-Optionally an HTML plot is created. There is an example in this repository.
+Optionally an HTML plot is created. Please see the <b><a href="https://tolkit.github.io/fpma/">the docs</a></b> for more detail on behind the scenes, and for a <b><a href="https://tolkit.github.io/fpma/fpma/mitome.html">HTML plot preview.</a></b>
 
 ## Testing
 
