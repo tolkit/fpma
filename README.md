@@ -1,5 +1,9 @@
 # Fast Plant Mitochondria Annotation
 
+<p align="center">
+    <img width="300" height="132" src="https://www.darwintreeoflife.org/wp-content/themes/dtol/dist/assets/gfx/dtol-logo-round.png">
+</p>
+
 Using a set of known genes (~43), we can predict how many of these occur in an angiosperm mitochondrial genome assembly. In this repository there is a set of HMM files (`fastas/hmms`) which describe these genes.
 
 The executable here runs `nhmmer` on these genes across the mitochondrial genome of interest.
@@ -13,21 +17,23 @@ You will need to direct the program to the executable path of `nhmmer`, and to a
 The help page is as follows.
 
 ```bash
-<Max Brown>
+<Max Brown; Wellcome Sanger 2022>
 Fast plant mito annotation (fmpa).
+Version: 0.1.1
 
 USAGE:
   fpma --plant-mito <PATH> --nhmmer-path <PATH>
 FLAGS:
   -h, --help            Prints help information
+  -v, --version         Prints version information
 ARGS:
   --plant-mito    Path to the plant mitochondrial genome
   --nhmmer-path   Path to the nhmmer executable (HMMER3)
 OPTIONAL ARGS:
   --hmms-path     Path to the directory containing all the
-                  HMM files. The default is \"./fastas/hmms/\",
+                  HMM files. The default is "./fastas/hmms/",
                   as generated in this repo.
-  --plot          Generate an SVG plot of where the annotated
+  --plot          Generate an HTML SVG of where the annotated
                   genes occur. Requires a name, no default.
   --e-value       The E-value cut-off determining presence of
                   mito gene. <default 0.001>
@@ -40,7 +46,7 @@ Optionally an HTML plot is created. There is an example in this repository.
 
 ## Testing
 
-In the case of the apple mitochondrial genome, we see absence of the following genes:
+In the case of the crab apple mitochondrial genome, we see absence of the following genes:
 
 - rpl2 (present at a higher E-value than 0.001)
 - rpl6 (absent in angiosperms)
