@@ -1,7 +1,7 @@
 /target
 /mitome
 # too big!
-fastas/nuc_alignments/*
+/fastas/nuc_alignments/*
 Mower*
-fastas/fastas/*
-fastas/fna_alignments/*
+/fastas/fastas/*
+/fastas/fna_alignments/*
