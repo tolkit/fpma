@@ -4,11 +4,13 @@ use tempdir::TempDir;
 const HELP: &str = "\
 <Max Brown; Wellcome Sanger 2022>
 Fast plant mito annotation (fmpa).
+Version: 0.1.1
 
 USAGE:
   fpma --plant-mito <PATH> --nhmmer-path <PATH>
 FLAGS:
   -h, --help            Prints help information
+  -v, --version         Prints version information
 ARGS:
   --plant-mito    Path to the plant mitochondrial genome
   --nhmmer-path   Path to the nhmmer executable (HMMER3)
@@ -16,7 +18,7 @@ OPTIONAL ARGS:
   --hmms-path     Path to the directory containing all the
                   HMM files. The default is \"./fastas/hmms/\",
                   as generated in this repo.
-  --plot          Generate an SVG plot of where the annotated
+  --plot          Generate an HTML SVG of where the annotated
                   genes occur. Requires a name, no default.
   --e-value       The E-value cut-off determining presence of
                   mito gene. <default 0.001>
@@ -89,9 +91,14 @@ struct AppArgs {
 fn parse_args() -> Result<AppArgs, pico_args::Error> {
     let mut pargs = pico_args::Arguments::from_env();
 
-    // Help has a higher priority and should be handled separately.
+    // Help and version have a higher priority.
     if pargs.contains(["-h", "--help"]) {
         print!("{}", HELP);
+        std::process::exit(0);
+    }
+
+    if pargs.contains(["-v", "--version"]) {
+        print!("{}", "fpma version 0.1.1");
         std::process::exit(0);
     }
 

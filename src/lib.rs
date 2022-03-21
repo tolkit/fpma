@@ -142,7 +142,7 @@ impl MitoGene {
     }
 }
 
-// for angiosperms, don't include rpl6 and rps8
+// TODO: for angiosperms, don't include rpl6 and rps8?
 impl FromStr for MitoGene {
     type Err = &'static str;
 
