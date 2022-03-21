@@ -38,6 +38,7 @@ fn make_html(svg: String) -> String {
     function showTooltip(evt, text) {{
         let tooltip = document.getElementById('tooltip');
         tooltip.innerHTML = text;
+        tooltip.style.fontFamily = 'monospace';
         tooltip.style.display = 'block';
         tooltip.style.left = evt.pageX + 10 + 'px';
         tooltip.style.top = evt.pageY + 10 + 'px';
@@ -141,15 +142,24 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             <line x1='{x1}' y1='{y1}' x2='{x2}' y2='{y2}' stroke='black' style = 'stroke-width: 3;' />\n"
         );
 
+        // what's the actual best value... 75 looks okay
+        let y1_mid = y1 - 75;
+        let y2_mid = y2 - 75;
+        // add mid line
+        let mid_line = format!("
+            <line x1='{x1}' y1='{y1_mid}' x2='{x2}' y2='{y2_mid}' stroke='black' stroke-dasharray='4' style = 'stroke-width: 1;' />\n"
+        );
+
         // labels at the top of each subplot.
-        let y_label_offset = 25;
+        let y_label_offset = 15;
         let y_text_label = (y1 - SUBPLOT_HEIGHT) + MARGIN + y_label_offset;
         let contig_text_label = format!(
             "
-                <text x='{x1}' y='{y_text_label}' class='small'>{contig_id}</text>"
+                <text x='{x1}' y='{y_text_label}' class='small' font-family='monospace'>{contig_id}</text>"
         );
 
         base_chroms += &line;
+        base_chroms += &mid_line;
         base_chroms += &contig_text_label;
 
         // now add each of the mitogenes in turn
@@ -182,18 +192,23 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             // add arrow
             let marker = "marker-end='url(#right_point)'";
 
+            use rand::Rng;
+            let mut rng = rand::thread_rng();
             // now adjust the height based on strandedness
             let y_gene = match strand {
-                Strand::Positive => (y1 as f32) - 10.0,
-                Strand::Negative => (y1 as f32) - 50.0,
+                Strand::Positive => rng.gen_range((y1 as f32) - 70.0..=(y1 as f32) - 10.0),
+                Strand::Negative => rng.gen_range(
+                    (y1 as f32) - (SUBPLOT_HEIGHT - MARGIN - 25) as f32..=(y1 as f32) - 80.0,
+                ),
             };
 
             // gene range in bp in a newline.
             let mitogene_plus_range = format!(
-                "\"<b>{:?}</b>\" + \"<br/>\" + \"{} &rarr; {} bp\"",
+                "\"<b>{:?}</b>\" + \"<br/>\" + \"{} &rarr; {} bp\" + \"<br/>\" + \"<b>E-value</b>: {}\"",
                 query_name,
                 format_bp_pretty(*env_from),
-                format_bp_pretty(*env_to)
+                format_bp_pretty(*env_to),
+                format!("{:.7}", e_value)
             );
 
             let gene_line = format!("
@@ -227,7 +242,7 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             let axis_label_text = format_axis_label_len(axis_label_len);
 
             let axis_label = format!(
-                "<text x='{axis_label_len_scaled}' y='{axis_label_text_y}' class='small' text-anchor='middle'>{axis_label_text}</text>\n"
+                "<text x='{axis_label_len_scaled}' y='{axis_label_text_y}' class='small' text-anchor='middle' font-family='monospace'>{axis_label_text}</text>\n"
             );
 
             base_chroms += &axis_label;

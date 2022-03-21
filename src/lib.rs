@@ -93,9 +93,13 @@ pub enum MitoGene {
     Atp6,
     Atp8,
     Atp9,
+    /// Lost in hornwort, lycopytes
     CcmB,
+    /// Lost in hornwort, lycopytes
     CcmC,
+    /// Lost in hornwort, lycopytes
     CcmFc,
+    /// Lost in hornwort, lycopytes
     CcmFn,
     Cob,
     Cox1,
@@ -333,40 +337,23 @@ impl Nhmmer {
         self.rows.retain(|row| row.e_value < e_value);
 
         // collect the hits from each fasta into a separate vec
-        // filter out secondary hits at the same time.
+        // EDIT: no longer filter out secondary hits at the same time.
+        // as these show us the exons.
         // this data will eventually be plotted
         let mut plot_data = plot::PlotData::new();
-        let mut index = 0;
-        let mut current_gene = MitoGene::Atp1;
         self.rows.iter().for_each(|e| {
             let group = plot_data
                 .data
                 .entry(e.target_name.clone())
                 .or_insert(vec![]);
-            if index == 0 {
-                group.push(plot::PlotDataRow {
-                    query_name: e.query_name,
-                    env_from: e.env_from,
-                    env_to: e.env_to,
-                    strand: e.strand,
-                    e_value: e.e_value,
-                    seq_len: e.sq_len,
-                });
-            } else if e.query_name == current_gene {
-                () // can't continue in a closure?
-            } else if e.query_name != current_gene {
-                group.push(plot::PlotDataRow {
-                    query_name: e.query_name,
-                    env_from: e.env_from,
-                    env_to: e.env_to,
-                    strand: e.strand,
-                    e_value: e.e_value,
-                    seq_len: e.sq_len,
-                });
-                current_gene = e.query_name;
-            }
-
-            index += 1;
+            group.push(plot::PlotDataRow {
+                query_name: e.query_name,
+                env_from: e.env_from,
+                env_to: e.env_to,
+                strand: e.strand,
+                e_value: e.e_value,
+                seq_len: e.sq_len,
+            });
         });
 
         let headers: Vec<String> = plot_data.data.iter().map(|(k, _)| k.clone()).collect();

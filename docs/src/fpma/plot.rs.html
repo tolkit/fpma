@@ -263,6 +263,21 @@
 <span id="261">261</span>
 <span id="262">262</span>
 <span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">MitoGene</span>, <span class="ident">Strand</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::BTreeMap</span>, <span class="ident">fs</span>, <span class="ident">io::Write</span>};
 
@@ -303,6 +318,7 @@
     function showTooltip(evt, text) {{
         let tooltip = document.getElementById(&#39;tooltip&#39;);
         tooltip.innerHTML = text;
+        tooltip.style.fontFamily = &#39;monospace&#39;;
         tooltip.style.display = &#39;block&#39;;
         tooltip.style.left = evt.pageX + 10 + &#39;px&#39;;
         tooltip.style.top = evt.pageY + 10 + &#39;px&#39;;
@@ -406,15 +422,24 @@
             &lt;line x1=&#39;{x1}&#39; y1=&#39;{y1}&#39; x2=&#39;{x2}&#39; y2=&#39;{y2}&#39; stroke=&#39;black&#39; style = &#39;stroke-width: 3;&#39; /&gt;\n&quot;</span>
         );
 
+        <span class="comment">// what&#39;s the actual best value... 75 looks okay</span>
+        <span class="kw">let</span> <span class="ident">y1_mid</span> <span class="op">=</span> <span class="ident">y1</span> <span class="op">-</span> <span class="number">75</span>;
+        <span class="kw">let</span> <span class="ident">y2_mid</span> <span class="op">=</span> <span class="ident">y2</span> <span class="op">-</span> <span class="number">75</span>;
+        <span class="comment">// add mid line</span>
+        <span class="kw">let</span> <span class="ident">mid_line</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;
+            &lt;line x1=&#39;{x1}&#39; y1=&#39;{y1_mid}&#39; x2=&#39;{x2}&#39; y2=&#39;{y2_mid}&#39; stroke=&#39;black&#39; stroke-dasharray=&#39;4&#39; style = &#39;stroke-width: 1;&#39; /&gt;\n&quot;</span>
+        );
+
         <span class="comment">// labels at the top of each subplot.</span>
-        <span class="kw">let</span> <span class="ident">y_label_offset</span> <span class="op">=</span> <span class="number">25</span>;
+        <span class="kw">let</span> <span class="ident">y_label_offset</span> <span class="op">=</span> <span class="number">15</span>;
         <span class="kw">let</span> <span class="ident">y_text_label</span> <span class="op">=</span> (<span class="ident">y1</span> <span class="op">-</span> <span class="ident">SUBPLOT_HEIGHT</span>) <span class="op">+</span> <span class="ident">MARGIN</span> <span class="op">+</span> <span class="ident">y_label_offset</span>;
         <span class="kw">let</span> <span class="ident">contig_text_label</span> <span class="op">=</span> <span class="macro">format!</span>(
             <span class="string">&quot;
-                &lt;text x=&#39;{x1}&#39; y=&#39;{y_text_label}&#39; class=&#39;small&#39;&gt;{contig_id}&lt;/text&gt;&quot;</span>
+                &lt;text x=&#39;{x1}&#39; y=&#39;{y_text_label}&#39; class=&#39;small&#39; font-family=&#39;monospace&#39;&gt;{contig_id}&lt;/text&gt;&quot;</span>
         );
 
         <span class="ident">base_chroms</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">line</span>;
+        <span class="ident">base_chroms</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">mid_line</span>;
         <span class="ident">base_chroms</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">contig_text_label</span>;
 
         <span class="comment">// now add each of the mitogenes in turn</span>
@@ -447,18 +472,23 @@
             <span class="comment">// add arrow</span>
             <span class="kw">let</span> <span class="ident">marker</span> <span class="op">=</span> <span class="string">&quot;marker-end=&#39;url(#right_point)&#39;&quot;</span>;
 
+            <span class="kw">use</span> <span class="ident">rand::Rng</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand::thread_rng</span>();
             <span class="comment">// now adjust the height based on strandedness</span>
             <span class="kw">let</span> <span class="ident">y_gene</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">strand</span> {
-                <span class="ident">Strand::Positive</span> =&gt; (<span class="ident">y1</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">-</span> <span class="number">10.0</span>,
-                <span class="ident">Strand::Negative</span> =&gt; (<span class="ident">y1</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">-</span> <span class="number">50.0</span>,
+                <span class="ident">Strand::Positive</span> =&gt; <span class="ident">rng</span>.<span class="ident">gen_range</span>((<span class="ident">y1</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">-</span> <span class="number">70.0</span>..<span class="op">=</span>(<span class="ident">y1</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">-</span> <span class="number">10.0</span>),
+                <span class="ident">Strand::Negative</span> =&gt; <span class="ident">rng</span>.<span class="ident">gen_range</span>(
+                    (<span class="ident">y1</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">-</span> (<span class="ident">SUBPLOT_HEIGHT</span> <span class="op">-</span> <span class="ident">MARGIN</span> <span class="op">-</span> <span class="number">25</span>) <span class="kw">as</span> <span class="ident">f32</span>..<span class="op">=</span>(<span class="ident">y1</span> <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">-</span> <span class="number">80.0</span>,
+                ),
             };
 
             <span class="comment">// gene range in bp in a newline.</span>
             <span class="kw">let</span> <span class="ident">mitogene_plus_range</span> <span class="op">=</span> <span class="macro">format!</span>(
-                <span class="string">&quot;\&quot;&lt;b&gt;{:?}&lt;/b&gt;\&quot; + \&quot;&lt;br/&gt;\&quot; + \&quot;{} &amp;rarr; {} bp\&quot;&quot;</span>,
+                <span class="string">&quot;\&quot;&lt;b&gt;{:?}&lt;/b&gt;\&quot; + \&quot;&lt;br/&gt;\&quot; + \&quot;{} &amp;rarr; {} bp\&quot; + \&quot;&lt;br/&gt;\&quot; + \&quot;&lt;b&gt;E-value&lt;/b&gt;: {}\&quot;&quot;</span>,
                 <span class="ident">query_name</span>,
                 <span class="ident">format_bp_pretty</span>(<span class="kw-2">*</span><span class="ident">env_from</span>),
-                <span class="ident">format_bp_pretty</span>(<span class="kw-2">*</span><span class="ident">env_to</span>)
+                <span class="ident">format_bp_pretty</span>(<span class="kw-2">*</span><span class="ident">env_to</span>),
+                <span class="macro">format!</span>(<span class="string">&quot;{:.7}&quot;</span>, <span class="ident">e_value</span>)
             );
 
             <span class="kw">let</span> <span class="ident">gene_line</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;
@@ -492,7 +522,7 @@
             <span class="kw">let</span> <span class="ident">axis_label_text</span> <span class="op">=</span> <span class="ident">format_axis_label_len</span>(<span class="ident">axis_label_len</span>);
 
             <span class="kw">let</span> <span class="ident">axis_label</span> <span class="op">=</span> <span class="macro">format!</span>(
-                <span class="string">&quot;&lt;text x=&#39;{axis_label_len_scaled}&#39; y=&#39;{axis_label_text_y}&#39; class=&#39;small&#39; text-anchor=&#39;middle&#39;&gt;{axis_label_text}&lt;/text&gt;\n&quot;</span>
+                <span class="string">&quot;&lt;text x=&#39;{axis_label_len_scaled}&#39; y=&#39;{axis_label_text_y}&#39; class=&#39;small&#39; text-anchor=&#39;middle&#39; font-family=&#39;monospace&#39;&gt;{axis_label_text}&lt;/text&gt;\n&quot;</span>
             );
 
             <span class="ident">base_chroms</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">axis_label</span>;
