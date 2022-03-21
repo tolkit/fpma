@@ -157,8 +157,8 @@ fn generate_plot_annotations(data: &PlotData) -> String {
         let x_data_min = 0.0;
         let x_data_max = mitogenes[0].seq_len as f32;
         // visualisation scales
-        let x_viz_min = MARGIN as f32;
-        let x_viz_max = (WIDTH - MARGIN) as f32;
+        let x_viz_min = x1 as f32;
+        let x_viz_max = x2 as f32;
 
         for PlotDataRow {
             query_name,
@@ -227,7 +227,7 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             let axis_label_text = format_axis_label_len(axis_label_len);
 
             let axis_label = format!(
-                "<text x='{axis_label_len_scaled}' y='{axis_label_text_y}' class='small'>{axis_label_text}</text>\n"
+                "<text x='{axis_label_len_scaled}' y='{axis_label_text_y}' class='small' text-anchor='middle'>{axis_label_text}</text>\n"
             );
 
             base_chroms += &axis_label;
@@ -240,7 +240,7 @@ fn generate_plot_annotations(data: &PlotData) -> String {
 /// Scale an x value from the data scale to the visualisation scale.
 fn scale_x(x: f32, x_data_min: f32, x_data_max: f32, x_viz_min: f32, x_viz_max: f32) -> f32 {
     // scale into range [x_viz_min, x_viz_max]
-    (x_viz_max - x_viz_min) * ((x - x_data_min) / (x_data_max - x_data_min))
+    ((x_viz_max - x_viz_min) * ((x - x_data_min) / (x_data_max - x_data_min))) + x_viz_min
 }
 
 /// Add `bp` to the end of a string.
