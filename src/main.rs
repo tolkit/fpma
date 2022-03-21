@@ -1,10 +1,8 @@
-// input a plant mitochondrial genome
-// output something... I guess a .gb file eventually?
-
 use fpma::{run_hmmer, Nhmmer};
+use tempdir::TempDir;
 
 const HELP: &str = "\
-<Max Brown>
+<Max Brown; Wellcome Sanger 2022>
 Fast plant mito annotation (fmpa).
 
 USAGE:
@@ -51,11 +49,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         None => 0.001,
     };
 
+    // a temporary place to store these tables.
+    let tmp_dir = TempDir::new("temp_tables")?;
+
     // execute nhmmer
-    run_hmmer(mitochondrial_genome_path.clone(), nhmmer_path, path_to_hmms)?;
+    run_hmmer(
+        mitochondrial_genome_path.clone(),
+        nhmmer_path,
+        path_to_hmms,
+        &tmp_dir,
+    )?;
 
     let mut table_parser = Nhmmer::new();
-    table_parser.read_tables_and_parse()?;
+    table_parser.read_tables_and_parse(&tmp_dir)?;
 
     let plot_data = table_parser.filter_table_and_print(e_value)?;
 
@@ -63,9 +69,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         plot_data.plot(&args.plot.unwrap())?
     }
 
+    // make sure we close this dir.
+    tmp_dir.close()?;
+
     Ok(())
 }
 
+/// A `pico-args` struct to parse the command line args.
 #[derive(Debug)]
 struct AppArgs {
     mitochondrial_genome: std::path::PathBuf,
@@ -75,6 +85,7 @@ struct AppArgs {
     plot: Option<String>,
 }
 
+/// Parse the command line arguments.
 fn parse_args() -> Result<AppArgs, pico_args::Error> {
     let mut pargs = pico_args::Arguments::from_env();
 
@@ -101,10 +112,12 @@ fn parse_args() -> Result<AppArgs, pico_args::Error> {
     Ok(args)
 }
 
+/// Parse `OsStr` to `PathBuf`.
 fn parse_path(s: &std::ffi::OsStr) -> Result<std::path::PathBuf, &'static str> {
     Ok(s.into())
 }
 
+/// Parse `&str` to `f32`.
 fn parse_f32(s: &str) -> Result<f32, &'static str> {
     s.parse().map_err(|_| "Cannot parse string to f32.")
 }

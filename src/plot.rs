@@ -2,11 +2,57 @@ use crate::{MitoGene, Strand};
 use std::{collections::BTreeMap, fs, io::Write};
 
 /// Size of the margins in the plot.
-static MARGIN: usize = 30;
+static MARGIN: usize = 35;
 /// The width of the plot.
 static WIDTH: usize = 1200;
 /// The height of each subplot.
 static SUBPLOT_HEIGHT: usize = 200;
+/// Function to make the HTML string.
+fn make_html(svg: String) -> String {
+    format!(
+        "<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Annotated Mito</title>
+    <style type='text/css'>
+        #tooltip {{
+                background: cornsilk;
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 5px;
+            }}
+    </style>
+</head>
+
+<body>
+<!-- Tooltip div -->
+
+    <div id='tooltip' display='none' style='position: absolute; display: none;'></div>
+
+<!-- SVG here -->
+    {}
+</body>
+
+<script>
+    function showTooltip(evt, text) {{
+        let tooltip = document.getElementById('tooltip');
+        tooltip.innerHTML = text;
+        tooltip.style.display = 'block';
+        tooltip.style.left = evt.pageX + 10 + 'px';
+        tooltip.style.top = evt.pageY + 10 + 'px';
+    }}
+
+    function hideTooltip() {{
+        var tooltip = document.getElementById('tooltip');
+        tooltip.style.display = 'none';
+    }}
+</script>
+</html>
+    ",
+        svg
+    )
+}
 
 /// `PlotData` row entry.
 pub struct PlotDataRow {
@@ -35,8 +81,8 @@ impl PlotData {
     /// Plot... work in progress.
     pub fn plot(&self, output: &str) -> Result<(), Box<dyn std::error::Error>> {
         // make the writable svg file
-        let out_filename = format!("{}.svg", output);
-        let mut svg_file = fs::File::create(out_filename)?;
+        let out_filename = format!("{}.html", output);
+        let mut html_file = fs::File::create(out_filename)?;
 
         let no_of_entries = self.data.len();
 
@@ -47,38 +93,35 @@ impl PlotData {
 
         // construct the svg
         let svg = format!(
-            "<?xml version='1.0' encoding='UTF-8'  standalone='no' ?> <!DOCTYPE svg \
-             PUBLIC '-//W3C//DTD SVG 1.0//EN' \
-             'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'> <svg version='1.0' \
-             width='{}' height='{}' xmlns='http://www.w3.org/2000/svg' \
-             xmlns:xlink='http://www.w3.org/1999/xlink'> \
-            \
-             <style type='text/css'> \
-                <!-- no styling yet -->
-             </style> \
-            \
-              <defs>
-                <!-- This is an arrow pointer --> 
-                <marker id='right_point' viewBox='0 0 10 10'
-                    refX='1' refY='5'
-                    markerUnits='strokeWidth'
-                    markerWidth='3' markerHeight='3'
-                    orient='auto'>
-                    <path d='M 0 0 L 10 5 L 0 10 z' fill='#f00'/>
-                </marker>
-            </defs>
-                {}
-                \
-             </svg>",
+            "<svg width='{}' height='{}'>
+        <defs>
+            <!-- This is an arrow pointer --> 
+            <marker id='right_point' viewBox='0 0 10 10'
+                refX='1' refY='5'
+                markerUnits='strokeWidth'
+                markerWidth='3' markerHeight='3'
+                orient='auto'>
+                <path d='M 0 0 L 10 5 L 0 10 z' fill='#f00'/>
+            </marker>
+        </defs>
+    {}
+    \
+</svg>",
             WIDTH, height, base_chroms
         );
 
-        svg_file.write_all(svg.as_bytes()).expect("unable to write");
+        let html = make_html(svg);
+
+        html_file
+            .write_all(html.as_bytes())
+            .expect("unable to write");
 
         Ok(())
     }
 }
 
+/// A function which returns the arrows representing genes
+/// along the axis of the mitochondrial contig.
 #[allow(unused_variables)]
 fn generate_plot_annotations(data: &PlotData) -> String {
     // a big string to add all the SVG elements of interest
@@ -94,13 +137,17 @@ fn generate_plot_annotations(data: &PlotData) -> String {
         let x2 = WIDTH - MARGIN;
         let y2 = (SUBPLOT_HEIGHT * el) - MARGIN;
 
-        let line = format!("<line x1='{x1}' y1='{y1}' x2='{x2}' y2='{y2}' stroke='black' style = 'stroke-width: 3;' />\n");
+        let line = format!("
+            <line x1='{x1}' y1='{y1}' x2='{x2}' y2='{y2}' stroke='black' style = 'stroke-width: 3;' />\n"
+        );
 
         // labels at the top of each subplot.
         let y_label_offset = 25;
         let y_text_label = (y1 - SUBPLOT_HEIGHT) + MARGIN + y_label_offset;
-        let contig_text_label =
-            format!("<text x='{x1}' y='{y_text_label}' class='small'>{contig_id}</text>");
+        let contig_text_label = format!(
+            "
+                <text x='{x1}' y='{y_text_label}' class='small'>{contig_id}</text>"
+        );
 
         base_chroms += &line;
         base_chroms += &contig_text_label;
@@ -122,6 +169,7 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             seq_len,
         } in mitogenes
         {
+            // find the start and end of the genes
             let x1_scaled = scale_x(
                 *env_from as f32,
                 x_data_min,
@@ -131,21 +179,37 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             );
             let x2_scaled = scale_x(*env_to as f32, x_data_min, x_data_max, x_viz_min, x_viz_max);
 
-            // now adjust the height and end marker
-            // based on strandedness
-            let (y_gene, marker) = match strand {
-                Strand::Positive => ((y1 as f32) - 10.0, "marker-end='url(#right_point)'"),
-                Strand::Negative => ((y1 as f32) - 50.0, "marker-end='url(#right_point)'"),
+            // add arrow
+            let marker = "marker-end='url(#right_point)'";
+
+            // now adjust the height based on strandedness
+            let y_gene = match strand {
+                Strand::Positive => (y1 as f32) - 10.0,
+                Strand::Negative => (y1 as f32) - 50.0,
             };
 
+            // gene range in bp in a newline.
+            let mitogene_plus_range = format!(
+                "\"<b>{:?}</b>\" + \"<br/>\" + \"{} &rarr; {} bp\"",
+                query_name,
+                format_bp_pretty(*env_from),
+                format_bp_pretty(*env_to)
+            );
+
             let gene_line = format!("
-            <line x1='{x1_scaled}' y1='{y_gene}' x2='{x2_scaled}' y2='{y_gene}' stroke='black' style = 'stroke-width: 3;' {marker}>
-                <title>{:?}</title>
-            </line>
-            ", query_name);
+                <line x1='{x1_scaled}' y1='{y_gene}' x2='{x2_scaled}' y2='{y_gene}' stroke='black' style = 'stroke-width: 3;' {marker} onmousemove='showTooltip(evt, {mitogene_plus_range});' onmouseout='hideTooltip();'/>"
+            );
+
+            // because SVG markers don't trigger events for some reason...
+            let circle_hover = format!(
+                "<circle r='5' fill='transparent' cx='{x2_scaled}' cy='{y_gene}' onmousemove='showTooltip(evt, {mitogene_plus_range});' onmouseout='hideTooltip();''></circle>"
+            );
 
             base_chroms += &gene_line;
+            base_chroms += &circle_hover;
         }
+
+        base_chroms += "\n";
 
         // lastly add scale labels
         for label in 0..=5 {
@@ -173,11 +237,27 @@ fn generate_plot_annotations(data: &PlotData) -> String {
     base_chroms
 }
 
+/// Scale an x value from the data scale to the visualisation scale.
 fn scale_x(x: f32, x_data_min: f32, x_data_max: f32, x_viz_min: f32, x_viz_max: f32) -> f32 {
     // scale into range [x_viz_min, x_viz_max]
     (x_viz_max - x_viz_min) * ((x - x_data_min) / (x_data_max - x_data_min))
 }
 
+/// Add `bp` to the end of a string.
 fn format_axis_label_len(x: f32) -> String {
     format!("{} bp", x)
+}
+
+/// Pretty print `i32` numbers.
+fn format_bp_pretty(n: i32) -> String {
+    let mut s = String::new();
+    let n_str = n.to_string();
+    let a = n_str.chars().rev().enumerate();
+    for (idx, val) in a {
+        if idx != 0 && idx % 3 == 0 {
+            s.insert(0, ',');
+        }
+        s.insert(0, val);
+    }
+    s
 }

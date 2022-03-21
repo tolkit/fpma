@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Annotated Mito</title>
+    <style type='text/css'>
+        #tooltip {
+                background: cornsilk;
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 5px;
+            }
+    </style>
+</head>
+
+<body>
+<!-- Tooltip div -->
+
+    <div id='tooltip' display='none' style='position: absolute; display: none;'></div>
+
+<!-- SVG here -->
+    <svg width='1200' height='200'>
+        <defs>
+            <!-- This is an arrow pointer --> 
+            <marker id='right_point' viewBox='0 0 10 10'
+                refX='1' refY='5'
+                markerUnits='strokeWidth'
+                markerWidth='3' markerHeight='3'
+                orient='auto'>
+                <path d='M 0 0 L 10 5 L 0 10 z' fill='#f00'/>
+            </marker>
+        </defs>
+    
+            <line x1='35' y1='165' x2='1165' y2='165' stroke='black' style = 'stroke-width: 3;' />
+
+                <text x='35' y='25' class='small'>Malus_sylvestris-mito_chloro.drMalSylv7-MW057419.2.NC_053735.1.fasta.BOTH.HiFiMapped.bam.filtered.5k</text>
+                <line x1='159.13165' y1='155' x2='163.53647' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Atp1</b>" + "<br/>" + "57,008 &rarr; 58,586 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='163.53647' cy='155' onmousemove='showTooltip(evt, "<b>Atp1</b>" + "<br/>" + "57,008 &rarr; 58,586 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='650.84924' y1='115' x2='649.0879' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Atp4</b>" + "<br/>" + "233,163 &rarr; 232,532 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='649.0879' cy='115' onmousemove='showTooltip(evt, "<b>Atp4</b>" + "<br/>" + "233,163 &rarr; 232,532 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='852.80365' y1='115' x2='850.029' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Atp6</b>" + "<br/>" + "305,512 &rarr; 304,518 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='850.029' cy='115' onmousemove='showTooltip(evt, "<b>Atp6</b>" + "<br/>" + "305,512 &rarr; 304,518 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='740.34406' y1='155' x2='741.924' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Atp8</b>" + "<br/>" + "265,224 &rarr; 265,790 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='741.924' cy='155' onmousemove='showTooltip(evt, "<b>Atp8</b>" + "<br/>" + "265,224 &rarr; 265,790 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='452.61298' y1='115' x2='451.6416' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Atp9</b>" + "<br/>" + "162,146 &rarr; 161,798 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='451.6416' cy='115' onmousemove='showTooltip(evt, "<b>Atp9</b>" + "<br/>" + "162,146 &rarr; 161,798 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='431.0746' y1='115' x2='429.20715' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>CcmB</b>" + "<br/>" + "154,430 &rarr; 153,761 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='429.20715' cy='115' onmousemove='showTooltip(evt, "<b>CcmB</b>" + "<br/>" + "154,430 &rarr; 153,761 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='406.67227' y1='115' x2='404.24097' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>CcmC</b>" + "<br/>" + "145,688 &rarr; 144,817 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='404.24097' cy='115' onmousemove='showTooltip(evt, "<b>CcmC</b>" + "<br/>" + "145,688 &rarr; 144,817 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='648.35095' y1='115' x2='646.11505' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>CcmFc</b>" + "<br/>" + "232,268 &rarr; 231,467 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='646.11505' cy='115' onmousemove='showTooltip(evt, "<b>CcmFc</b>" + "<br/>" + "232,268 &rarr; 231,467 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='498.2299' y1='155' x2='503.58102' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>CcmFn</b>" + "<br/>" + "178,488 &rarr; 180,405 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='503.58102' cy='155' onmousemove='showTooltip(evt, "<b>CcmFn</b>" + "<br/>" + "178,488 &rarr; 180,405 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='594.6641' y1='155' x2='598.1143' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Cob</b>" + "<br/>" + "213,035 &rarr; 214,271 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='598.1143' cy='155' onmousemove='showTooltip(evt, "<b>Cob</b>" + "<br/>" + "213,035 &rarr; 214,271 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='615.0413' y1='155' x2='619.71686' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Cox1</b>" + "<br/>" + "220,335 &rarr; 222,010 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='619.71686' cy='155' onmousemove='showTooltip(evt, "<b>Cox1</b>" + "<br/>" + "220,335 &rarr; 222,010 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='663.96045' y1='115' x2='661.2919' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Cox2</b>" + "<br/>" + "237,860 &rarr; 236,904 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='661.2919' cy='115' onmousemove='showTooltip(evt, "<b>Cox2</b>" + "<br/>" + "237,860 &rarr; 236,904 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='743.4229' y1='155' x2='745.63934' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Cox3</b>" + "<br/>" + "266,327 &rarr; 267,121 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='745.63934' cy='155' onmousemove='showTooltip(evt, "<b>Cox3</b>" + "<br/>" + "266,327 &rarr; 267,121 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='1098.7002' y1='155' x2='1104.6067' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>MatR</b>" + "<br/>" + "393,603 &rarr; 395,719 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='1104.6067' cy='155' onmousemove='showTooltip(evt, "<b>MatR</b>" + "<br/>" + "393,603 &rarr; 395,719 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='621.8048' y1='155' x2='624.29193' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>MttB</b>" + "<br/>" + "222,758 &rarr; 223,649 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='624.29193' cy='155' onmousemove='showTooltip(evt, "<b>MttB</b>" + "<br/>" + "222,758 &rarr; 223,649 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='535.8411' y1='155' x2='537.0358' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad1</b>" + "<br/>" + "191,962 &rarr; 192,390 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='537.0358' cy='155' onmousemove='showTooltip(evt, "<b>Nad1</b>" + "<br/>" + "191,962 &rarr; 192,390 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='1078.8003' y1='155' x2='1080.6901' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad2</b>" + "<br/>" + "386,474 &rarr; 387,151 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='1080.6901' cy='155' onmousemove='showTooltip(evt, "<b>Nad2</b>" + "<br/>" + "386,474 &rarr; 387,151 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='223.81099' y1='155' x2='224.96384' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad3</b>" + "<br/>" + "80,179 &rarr; 80,592 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='224.96384' cy='155' onmousemove='showTooltip(evt, "<b>Nad3</b>" + "<br/>" + "80,179 &rarr; 80,592 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='336.5525' y1='115' x2='329.82526' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad4</b>" + "<br/>" + "120,568 &rarr; 118,158 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='329.82526' cy='115' onmousemove='showTooltip(evt, "<b>Nad4</b>" + "<br/>" + "120,568 &rarr; 118,158 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='652.15' y1='115' x2='651.2596' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad4L</b>" + "<br/>" + "233,629 &rarr; 233,310 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='651.2596' cy='115' onmousemove='showTooltip(evt, "<b>Nad4L</b>" + "<br/>" + "233,629 &rarr; 233,310 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='448.2082' y1='115' x2='444.7273' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad5</b>" + "<br/>" + "160,568 &rarr; 159,321 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='444.7273' cy='115' onmousemove='showTooltip(evt, "<b>Nad5</b>" + "<br/>" + "160,568 &rarr; 159,321 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='167.07037' y1='155' x2='169.09692' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad6</b>" + "<br/>" + "59,852 &rarr; 60,578 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='169.09692' cy='155' onmousemove='showTooltip(evt, "<b>Nad6</b>" + "<br/>" + "59,852 &rarr; 60,578 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='148.08612' y1='155' x2='149.5237' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad7</b>" + "<br/>" + "53,051 &rarr; 53,566 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='149.5237' cy='155' onmousemove='showTooltip(evt, "<b>Nad7</b>" + "<br/>" + "53,051 &rarr; 53,566 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='943.5099' y1='115' x2='941.77924' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Nad9</b>" + "<br/>" + "338,007 &rarr; 337,387 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='941.77924' cy='115' onmousemove='showTooltip(evt, "<b>Nad9</b>" + "<br/>" + "338,007 &rarr; 337,387 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='589.3744' y1='155' x2='591.15814' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rpl5</b>" + "<br/>" + "211,140 &rarr; 211,779 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='591.15814' cy='155' onmousemove='showTooltip(evt, "<b>Rpl5</b>" + "<br/>" + "211,140 &rarr; 211,779 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='953.0062' y1='155' x2='955.2086' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rpl10</b>" + "<br/>" + "341,409 &rarr; 342,198 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='955.2086' cy='155' onmousemove='showTooltip(evt, "<b>Rpl10</b>" + "<br/>" + "341,409 &rarr; 342,198 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='867.2965' y1='115' x2='865.7864' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rpl16</b>" + "<br/>" + "310,704 &rarr; 310,163 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='865.7864' cy='115' onmousemove='showTooltip(evt, "<b>Rpl16</b>" + "<br/>" + "310,704 &rarr; 310,163 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='126.84641' y1='155' x2='128.78644' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rps1</b>" + "<br/>" + "45,442 &rarr; 46,137 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='128.78644' cy='155' onmousemove='showTooltip(evt, "<b>Rps1</b>" + "<br/>" + "45,442 &rarr; 46,137 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='121.76888' y1='155' x2='122.11501' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rps2</b>" + "<br/>" + "43,623 &rarr; 43,747 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='122.11501' cy='155' onmousemove='showTooltip(evt, "<b>Rps2</b>" + "<br/>" + "43,623 &rarr; 43,747 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='733.2567' y1='155' x2='738.0049' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rps3</b>" + "<br/>" + "262,685 &rarr; 264,386 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='738.0049' cy='155' onmousemove='showTooltip(evt, "<b>Rps3</b>" + "<br/>" + "262,685 &rarr; 264,386 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='121.760506' y1='155' x2='124.99852' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rps4</b>" + "<br/>" + "43,620 &rarr; 44,780 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='124.99852' cy='155' onmousemove='showTooltip(evt, "<b>Rps4</b>" + "<br/>" + "43,620 &rarr; 44,780 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='224.33577' y1='155' x2='226.09714' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rps12</b>" + "<br/>" + "80,367 &rarr; 80,998 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='226.09714' cy='155' onmousemove='showTooltip(evt, "<b>Rps12</b>" + "<br/>" + "80,367 &rarr; 80,998 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='1023.3912' y1='155' x2='1024.3961' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rps13</b>" + "<br/>" + "366,624 &rarr; 366,984 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='1024.3961' cy='155' onmousemove='showTooltip(evt, "<b>Rps13</b>" + "<br/>" + "366,624 &rarr; 366,984 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='590.83997' y1='155' x2='591.69403' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rps14</b>" + "<br/>" + "211,665 &rarr; 211,971 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='591.69403' cy='155' onmousemove='showTooltip(evt, "<b>Rps14</b>" + "<br/>" + "211,665 &rarr; 211,971 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='733.07526' y1='155' x2='733.51636' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Rps19</b>" + "<br/>" + "262,620 &rarr; 262,778 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='733.51636' cy='155' onmousemove='showTooltip(evt, "<b>Rps19</b>" + "<br/>" + "262,620 &rarr; 262,778 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='188.9465' y1='115' x2='187.83553' y2='115' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Sdh3</b>" + "<br/>" + "67,689 &rarr; 67,291 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='187.83553' cy='115' onmousemove='showTooltip(evt, "<b>Sdh3</b>" + "<br/>" + "67,689 &rarr; 67,291 bp");' onmouseout='hideTooltip();''></circle>
+                <line x1='745.40485' y1='155' x2='746.8089' y2='155' stroke='black' style = 'stroke-width: 3;' marker-end='url(#right_point)' onmousemove='showTooltip(evt, "<b>Sdh4</b>" + "<br/>" + "267,037 &rarr; 267,540 bp");' onmouseout='hideTooltip();'/><circle r='5' fill='transparent' cx='746.8089' cy='155' onmousemove='showTooltip(evt, "<b>Sdh4</b>" + "<br/>" + "267,037 &rarr; 267,540 bp");' onmouseout='hideTooltip();''></circle>
+<text x='35' y='180' class='small'>0 bp</text>
+<text x='225.99945' y='180' class='small'>80963 bp</text>
+<text x='451.9989' y='180' class='small'>161926 bp</text>
+<text x='678.0011' y='180' class='small'>242890 bp</text>
+<text x='904.00055' y='180' class='small'>323853 bp</text>
+<text x='1130' y='180' class='small'>404816 bp</text>
+
+    </svg>
+</body>
+
+<script>
+    function showTooltip(evt, text) {
+        let tooltip = document.getElementById('tooltip');
+        tooltip.innerHTML = text;
+        tooltip.style.display = 'block';
+        tooltip.style.left = evt.pageX + 10 + 'px';
+        tooltip.style.top = evt.pageY + 10 + 'px';
+    }
+
+    function hideTooltip() {
+        var tooltip = document.getElementById('tooltip');
+        tooltip.style.display = 'none';
+    }
+</script>
+</html>
+    

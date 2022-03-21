@@ -1,5 +1,7 @@
 /target
-/hmm_tables
 /mitome
 # too big!
 fastas/nuc_alignments/*
+Mower*
+fastas/fastas/*
+fastas/fna_alignments/*

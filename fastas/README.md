@@ -1,6 +1,6 @@
 # Generating the HMM files
 
-All sequences are publicly available through NCBI. Requires the following softwares:
+All sequences are publicly available through NCBI. Requires the following software:
 
 - <a href="https://mafft.cbrc.jp/alignment/software/">MAFFT</a>
 - <a href="http://hmmer.org/">HMMER3</a>
@@ -20,3 +20,5 @@ bash make_nuc_alignments.bash
 # finally create the hmms
 bash make_hmms.bash
 ```
+
+Note that the HMMs are derived only for angiosperms currently.

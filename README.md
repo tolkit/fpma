@@ -1,8 +1,12 @@
 # Fast Plant Mitochondria Annotation
 
-Using a set of known genes (~40), we can predict how many of these occur in a mitochondrial genome assembly. In this repository there is a set of HMM files (`fastas/hmms`) which describe these genes.
+Using a set of known genes (~43), we can predict how many of these occur in an angiosperm mitochondrial genome assembly. In this repository there is a set of HMM files (`fastas/hmms`) which describe these genes.
 
 The executable here runs `nhmmer` on these genes across the mitochondrial genome of interest.
+
+## Requirements
+
+You will need to direct the program to the executable path of `nhmmer`, and to a directory of HMMs (provided in this repository under `./fastas/hmms`).
 
 ## fpma
 
@@ -32,6 +36,18 @@ EXAMPLE:
   fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --plot output > output.tsv
 ```
 
-And an example output SVG from the program.
+Optionally an HTML plot is created. There is an example in this repository.
 
-<img src="./mitome.svg">
+## Testing
+
+In the case of the apple mitochondrial genome, we see absence of the following genes:
+
+- rpl2 (present at a higher E-value than 0.001)
+- rpl6 (absent in angiosperms)
+- rps7 (known to be absent in apples)
+- rps8 (absent in angiosperms)
+- rps10/11 (known to be absent in mitochondrial genome in apples, but present in nuclear DNA.)
+
+## Plans
+
+- Make more general for Liverworts, Hornworts, Mosses, Lycopods, Ferns, and Gymnosperms.
