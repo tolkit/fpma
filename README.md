@@ -19,27 +19,28 @@ The help page is as follows.
 ```bash
 <Max Brown; Wellcome Sanger 2022>
 Fast plant mito annotation (fmpa).
-Version: 0.1.1
+Version: 0.1.2
 
 USAGE:
-  fpma --plant-mito <PATH> --nhmmer-path <PATH>
+  fpma --plant-mito <PATH> --nhmmer-path <PATH> --hmms-path <PATH>
 FLAGS:
   -h, --help            Prints help information
   -v, --version         Prints version information
 ARGS:
-  --plant-mito    Path to the plant mitochondrial genome
-  --nhmmer-path   Path to the nhmmer executable (HMMER3)
-  --hmms-path     Path to the directory containing all the
-                  HMM files. Download from:
-                  https://github.com/tolkit/fpma
+  --plant-mito          Path to the plant mitochondrial genome
+  --nhmmer-path         Path to the nhmmer executable (HMMER3)
+  --hmms-path           Path to the directory containing a set of
+                        HMM files. Download from:
+                        https://github.com/tolkit/fpma/hmms/
 OPTIONAL ARGS:
-  --plot          Generate an HTML SVG of where the annotated
-                  genes occur. Requires a name, no default.
-  --e-value       The E-value cut-off determining presence of
-                  mito gene. <default 0.001>
+  --plot                Generate an HTML SVG of where the annotated
+                        genes occur. Requires a name.
+  --e-value             The E-value cut-off determining presence of
+                        mito gene. <default 0.001>
+  --gff                 Output a GFF3 file of gene locations.
                   
 EXAMPLE:
-  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./angiosperm_hmms/
+  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./hmms/angiosperm_hmms/
 ```
 
 Optionally an HTML plot is created. Please see the <b><a href="https://tolkit.github.io/fpma/">the docs</a></b> for more detail on behind the scenes, and for a <b><a href="https://tolkit.github.io/fpma/fpma/mitome.html">HTML plot preview.</a></b>
