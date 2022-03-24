@@ -278,8 +278,21 @@
 <span id="276">276</span>
 <span id="277">277</span>
 <span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">MitoGene</span>, <span class="ident">Strand</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::BTreeMap</span>, <span class="ident">fs</span>, <span class="ident">io::Write</span>};
+<span class="kw">use</span> <span class="ident">rand::Rng</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::BTreeMap</span>, <span class="ident">fs</span>, <span class="ident">io::Write</span>, <span class="ident">path::PathBuf</span>};
 
 <span class="doccomment">/// Size of the margins in the plot.</span>
 <span class="kw">static</span> <span class="ident">MARGIN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">35</span>;
@@ -359,11 +372,10 @@
             <span class="ident">data</span>: <span class="ident">BTreeMap::new</span>(),
         }
     }
-    <span class="doccomment">/// Plot... work in progress.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">plot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">output</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">std::error::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="comment">// make the writable svg file</span>
-        <span class="kw">let</span> <span class="ident">out_filename</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;{}.html&quot;</span>, <span class="ident">output</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">html_file</span> <span class="op">=</span> <span class="ident">fs::File::create</span>(<span class="ident">out_filename</span>)<span class="question-mark">?</span>;
+    <span class="doccomment">/// Takes an output string for the file name, and creates an HTML output</span>
+    <span class="doccomment">/// with an embedded SVG element showing the plot.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">plot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">output</span>: <span class="ident">PathBuf</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">std::error::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">html_file</span> <span class="op">=</span> <span class="ident">fs::File::create</span>(<span class="ident">output</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">no_of_entries</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>();
 
@@ -376,13 +388,21 @@
         <span class="kw">let</span> <span class="ident">svg</span> <span class="op">=</span> <span class="macro">format!</span>(
             <span class="string">&quot;&lt;svg width=&#39;{}&#39; height=&#39;{}&#39;&gt;
         &lt;defs&gt;
-            &lt;!-- This is an arrow pointer --&gt; 
-            &lt;marker id=&#39;right_point&#39; viewBox=&#39;0 0 10 10&#39;
+            &lt;!-- This is an orange arrow pointer --&gt; 
+            &lt;marker id=&#39;point_orange&#39; viewBox=&#39;0 0 10 10&#39;
                 refX=&#39;1&#39; refY=&#39;5&#39;
                 markerUnits=&#39;strokeWidth&#39;
                 markerWidth=&#39;3&#39; markerHeight=&#39;3&#39;
                 orient=&#39;auto&#39;&gt;
-                &lt;path d=&#39;M 0 0 L 10 5 L 0 10 z&#39; fill=&#39;#f00&#39;/&gt;
+                &lt;path d=&#39;M 0 0 L 10 5 L 0 10 z&#39; fill=&#39;#e6a009&#39;/&gt;
+            &lt;/marker&gt;
+            &lt;!-- This is a green arrow pointer --&gt; 
+            &lt;marker id=&#39;point_green&#39; viewBox=&#39;0 0 10 10&#39;
+                refX=&#39;1&#39; refY=&#39;5&#39;
+                markerUnits=&#39;strokeWidth&#39;
+                markerWidth=&#39;3&#39; markerHeight=&#39;3&#39;
+                orient=&#39;auto&#39;&gt;
+                &lt;path d=&#39;M 0 0 L 10 5 L 0 10 z&#39; fill=&#39;#8fce00&#39;/&gt;
             &lt;/marker&gt;
         &lt;/defs&gt;
     {}
@@ -469,10 +489,14 @@
             );
             <span class="kw">let</span> <span class="ident">x2_scaled</span> <span class="op">=</span> <span class="ident">scale_x</span>(<span class="kw-2">*</span><span class="ident">env_to</span> <span class="kw">as</span> <span class="ident">f32</span>, <span class="ident">x_data_min</span>, <span class="ident">x_data_max</span>, <span class="ident">x_viz_min</span>, <span class="ident">x_viz_max</span>);
 
-            <span class="comment">// add arrow</span>
-            <span class="kw">let</span> <span class="ident">marker</span> <span class="op">=</span> <span class="string">&quot;marker-end=&#39;url(#right_point)&#39;&quot;</span>;
+            <span class="kw">let</span> <span class="ident">marker_string</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">query_name</span>);
+            <span class="comment">// add arrows</span>
+            <span class="kw">let</span> <span class="ident">marker</span> <span class="op">=</span> <span class="kw">if</span> <span class="op">!</span><span class="ident">marker_string</span>.<span class="ident">starts_with</span>(<span class="string">&quot;Trn&quot;</span>) {
+                <span class="string">&quot;marker-end=&#39;url(#point_orange)&#39;&quot;</span>
+            } <span class="kw">else</span> {
+                <span class="string">&quot;marker-end=&#39;url(#point_green)&#39;&quot;</span>
+            };
 
-            <span class="kw">use</span> <span class="ident">rand::Rng</span>;
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand::thread_rng</span>();
             <span class="comment">// now adjust the height based on strandedness</span>
             <span class="kw">let</span> <span class="ident">y_gene</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">strand</span> {
