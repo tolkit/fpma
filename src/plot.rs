@@ -1,5 +1,6 @@
 use crate::{MitoGene, Strand};
-use std::{collections::BTreeMap, fs, io::Write};
+use rand::Rng;
+use std::{collections::BTreeMap, fs, io::Write, path::PathBuf};
 
 /// Size of the margins in the plot.
 static MARGIN: usize = 35;
@@ -79,11 +80,10 @@ impl PlotData {
             data: BTreeMap::new(),
         }
     }
-    /// Plot... work in progress.
-    pub fn plot(&self, output: &str) -> Result<(), Box<dyn std::error::Error>> {
-        // make the writable svg file
-        let out_filename = format!("{}.html", output);
-        let mut html_file = fs::File::create(out_filename)?;
+    /// Takes an output string for the file name, and creates an HTML output
+    /// with an embedded SVG element showing the plot.
+    pub fn plot(&self, output: PathBuf) -> Result<(), Box<dyn std::error::Error>> {
+        let mut html_file = fs::File::create(output)?;
 
         let no_of_entries = self.data.len();
 
@@ -96,13 +96,21 @@ impl PlotData {
         let svg = format!(
             "<svg width='{}' height='{}'>
         <defs>
-            <!-- This is an arrow pointer --> 
-            <marker id='right_point' viewBox='0 0 10 10'
+            <!-- This is an orange arrow pointer --> 
+            <marker id='point_orange' viewBox='0 0 10 10'
                 refX='1' refY='5'
                 markerUnits='strokeWidth'
                 markerWidth='3' markerHeight='3'
                 orient='auto'>
-                <path d='M 0 0 L 10 5 L 0 10 z' fill='#f00'/>
+                <path d='M 0 0 L 10 5 L 0 10 z' fill='#e6a009'/>
+            </marker>
+            <!-- This is a green arrow pointer --> 
+            <marker id='point_green' viewBox='0 0 10 10'
+                refX='1' refY='5'
+                markerUnits='strokeWidth'
+                markerWidth='3' markerHeight='3'
+                orient='auto'>
+                <path d='M 0 0 L 10 5 L 0 10 z' fill='#8fce00'/>
             </marker>
         </defs>
     {}
@@ -189,10 +197,14 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             );
             let x2_scaled = scale_x(*env_to as f32, x_data_min, x_data_max, x_viz_min, x_viz_max);
 
-            // add arrow
-            let marker = "marker-end='url(#right_point)'";
+            let marker_string = format!("{:?}", query_name);
+            // add arrows
+            let marker = if !marker_string.starts_with("Trn") {
+                "marker-end='url(#point_orange)'"
+            } else {
+                "marker-end='url(#point_green)'"
+            };
 
-            use rand::Rng;
             let mut rng = rand::thread_rng();
             // now adjust the height based on strandedness
             let y_gene = match strand {

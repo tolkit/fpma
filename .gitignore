@@ -2,4 +2,4 @@
 /mitome
 Mower*
 # ignore anything with digits in the fasta dir
-/fastas/[0-9]*
+/hmms/[0-9]*

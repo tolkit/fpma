@@ -1,41 +1,46 @@
+use std::path::{Path, PathBuf};
+
+/// The command line help string.
 static HELP: &str = "\
 <Max Brown; Wellcome Sanger 2022>
 Fast plant mito annotation (fmpa).
-Version: 0.1.1
+Version: 0.1.2
 
 USAGE:
-  fpma --plant-mito <PATH> --nhmmer-path <PATH>
+  fpma --plant-mito <PATH> --nhmmer-path <PATH> --hmms-path <PATH>
 FLAGS:
   -h, --help            Prints help information
   -v, --version         Prints version information
 ARGS:
-  --plant-mito    Path to the plant mitochondrial genome
-  --nhmmer-path   Path to the nhmmer executable (HMMER3)
-  --hmms-path     Path to the directory containing all the
-                  HMM files. Download from:
-                  https://github.com/tolkit/fpma
+  --plant-mito          Path to the plant mitochondrial genome
+  --nhmmer-path         Path to the nhmmer executable (HMMER3)
+  --hmms-path           Path to the directory containing a set of
+                        HMM files. Download from:
+                        https://github.com/tolkit/fpma/hmms/
 OPTIONAL ARGS:
-  --plot          Generate an HTML SVG of where the annotated
-                  genes occur. Requires a name, no default.
-  --e-value       The E-value cut-off determining presence of
-                  mito gene. <default 0.001>
+  --plot                Generate an HTML SVG of where the annotated
+                        genes occur. Requires a name.
+  --e-value             The E-value cut-off determining presence of
+                        mito gene. <default 0.001>
+  --gff                 Output a GFF3 file of gene locations.
                   
 EXAMPLE:
-  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./angiosperm_hmms/
+  fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./hmms/angiosperm_hmms/
 ";
 
 /// A `pico-args` struct to parse the command line args.
 #[derive(Debug)]
-pub struct AppArgs {
-    pub mitochondrial_genome: std::path::PathBuf,
-    pub path_to_nhmmer: std::path::PathBuf,
-    pub path_to_hmms: std::path::PathBuf,
+pub struct AppArgs<P: AsRef<Path>> {
+    pub mitochondrial_genome: P,
+    pub path_to_nhmmer: P,
+    pub path_to_hmms: P,
     pub e_value: Option<f32>,
-    pub plot: Option<String>,
+    pub plot: Option<P>,
+    pub gff: Option<P>,
 }
 
 /// Parse the command line arguments.
-pub fn parse_args() -> Result<AppArgs, pico_args::Error> {
+pub fn parse_args() -> Result<AppArgs<PathBuf>, pico_args::Error> {
     let mut pargs = pico_args::Arguments::from_env();
 
     // Help and version have a higher priority.
@@ -54,7 +59,8 @@ pub fn parse_args() -> Result<AppArgs, pico_args::Error> {
         path_to_nhmmer: pargs.value_from_os_str("--nhmmer-path", parse_path)?,
         path_to_hmms: pargs.value_from_os_str("--hmms-path", parse_path)?,
         e_value: pargs.opt_value_from_fn("--e-value", parse_f32)?,
-        plot: pargs.opt_value_from_str("--plot")?,
+        plot: pargs.opt_value_from_os_str("--plot", parse_path)?,
+        gff: pargs.opt_value_from_os_str("--gff", parse_path)?,
     };
 
     // It's up to the caller what to do with the remaining arguments.
@@ -67,7 +73,7 @@ pub fn parse_args() -> Result<AppArgs, pico_args::Error> {
 }
 
 /// Parse `OsStr` to `PathBuf`.
-fn parse_path(s: &std::ffi::OsStr) -> Result<std::path::PathBuf, &'static str> {
+fn parse_path(s: &std::ffi::OsStr) -> Result<PathBuf, &'static str> {
     Ok(s.into())
 }
 

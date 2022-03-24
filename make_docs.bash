@@ -14,8 +14,8 @@ cp -r target/doc ./docs
 ./target/release/fpma \
 --plant-mito mitome/malus.fasta \
 --nhmmer-path /Users/mb39/bin/nhmmer \
---hmms-path ./fastas/angiosperm_hmms/ \
---plot mitome \
+--hmms-path ./hmms/angiosperm_hmms/ \
+--plot mitome.html \
 --e-value 0.0000000000001
 # move it to the docs.
 mv ./mitome.html ./docs/fpma
