@@ -48,6 +48,11 @@ trnY(GUA)
 
 More tricky to make these, as NCBI does not keep separate records for tRNA's like they do for genes.
 
+Software needed:
+- <a href="https://mafft.cbrc.jp/alignment/software/">MAFFT</a>
+- <a href="http://hmmer.org/">HMMER3</a>
+- <a href="https://github.com/tolkit/mmft/">mmft</a>
+
 ```bash
 # fetch the metadata
 # creates a bunch of gene-anticodon text files

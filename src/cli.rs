@@ -19,10 +19,11 @@ ARGS:
                         https://github.com/tolkit/fpma/hmms/
 OPTIONAL ARGS:
   --plot                Generate an HTML SVG of where the annotated
-                        genes occur. Requires a name.
+                        genes occur. Requires a name ending in `.html`.
   --e-value             The E-value cut-off determining presence of
                         mito gene. <default 0.001>
-  --gff                 Output a GFF3 file of gene locations.
+  --gff                 Output a GFF3 file of gene locations. Requires
+                        a name ending in `.gff`.
                   
 EXAMPLE:
   fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./hmms/angiosperm_hmms/
@@ -50,7 +51,7 @@ pub fn parse_args() -> Result<AppArgs<PathBuf>, pico_args::Error> {
     }
 
     if pargs.contains(["-v", "--version"]) {
-        print!("{}", "fpma version 0.1.1");
+        print!("{}", "fpma version 0.1.2");
         std::process::exit(0);
     }
 

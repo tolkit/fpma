@@ -79,7 +79,7 @@ pub fn run_hmmer(
             .arg(hmm_path)
             .arg(&mitochondrial_genome_path)
             .output()
-            .expect("failed to execute process");
+            .expect("Failed to execute process.");
 
         assert!(output.status.success());
     }

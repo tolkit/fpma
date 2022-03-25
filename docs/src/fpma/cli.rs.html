@@ -83,6 +83,7 @@
 <span id="81">81</span>
 <span id="82">82</span>
 <span id="83">83</span>
+<span id="84">84</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
 
 <span class="doccomment">/// The command line help string.</span>
@@ -104,10 +105,11 @@ ARGS:
                         https://github.com/tolkit/fpma/hmms/
 OPTIONAL ARGS:
   --plot                Generate an HTML SVG of where the annotated
-                        genes occur. Requires a name.
+                        genes occur. Requires a name ending in `.html`.
   --e-value             The E-value cut-off determining presence of
                         mito gene. &lt;default 0.001&gt;
-  --gff                 Output a GFF3 file of gene locations.
+  --gff                 Output a GFF3 file of gene locations. Requires
+                        a name ending in `.gff`.
                   
 EXAMPLE:
   fpma --plant-mito ./mito.fasta --nhmmer-path ./nhmmer --hmms-path ./hmms/angiosperm_hmms/
@@ -135,7 +137,7 @@ EXAMPLE:
     }
 
     <span class="kw">if</span> <span class="ident">pargs</span>.<span class="ident">contains</span>([<span class="string">&quot;-v&quot;</span>, <span class="string">&quot;--version&quot;</span>]) {
-        <span class="macro">print!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;fpma version 0.1.1&quot;</span>);
+        <span class="macro">print!</span>(<span class="string">&quot;{}&quot;</span>, <span class="string">&quot;fpma version 0.1.2&quot;</span>);
         <span class="ident">std::process::exit</span>(<span class="number">0</span>);
     }
 
