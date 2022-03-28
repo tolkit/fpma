@@ -427,7 +427,7 @@ impl Nhmmer {
 
     /// Produce a GFF from the NHMMER tables.
     ///
-    /// This function is pretty copy-heavy and I might
+    /// This function is pretty copy-heavy and I *might*
     /// re-factor at some point.
     #[allow(unused_variables)]
     pub fn make_gff3(
@@ -518,6 +518,10 @@ impl Nhmmer {
                 seq_len: e.sq_len,
             });
         });
+
+        // print completeness data
+        // potentially to be made optional but hey-ho.
+        plot_data.completeness_angiosperms();
 
         let headers: Vec<String> = plot_data.data.iter().map(|(k, _)| k.clone()).collect();
 

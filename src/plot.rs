@@ -80,6 +80,63 @@ impl PlotData {
             data: BTreeMap::new(),
         }
     }
+    /// Statistics on the plot data. Understand quickly the completeness
+    /// of each contig. There are a few shortcomings of the approach, but it
+    /// is quick and dirty.
+    pub fn completeness_angiosperms(&self) {
+        // two genes in our set which are missing in (most/all) angiosperms
+        let core_angiosperm_missing = 2;
+        // and tRNA missing from seed plants (which incl angiosperms)
+        // not sure how to filter this at the moment.
+        let trna_missing = 0;
+
+        // number of core genes
+        let mut core_genes = MitoGene::iterator()
+            .filter(|e| !e.to_string().contains("Trn"))
+            .collect::<Vec<_>>();
+
+        core_genes.sort();
+        core_genes.dedup();
+
+        let mut trna_genes = MitoGene::iterator()
+            .filter(|e| e.to_string().contains("Trn"))
+            .collect::<Vec<_>>();
+
+        trna_genes.sort();
+        trna_genes.dedup();
+
+        let number_core_genes = core_genes.len() - core_angiosperm_missing;
+        let number_trna_genes = trna_genes.len() - trna_missing;
+
+        for (contig, genes) in &self.data {
+            let mut number_core = genes
+                .iter()
+                .filter(|e| !e.query_name.to_string().contains("Trn"))
+                .map(|e| e.query_name)
+                .collect::<Vec<_>>();
+
+            number_core.sort();
+            number_core.dedup();
+
+            let mut number_trna = genes
+                .iter()
+                .filter(|e| e.query_name.to_string().contains("Trn"))
+                .map(|e| e.query_name)
+                .collect::<Vec<_>>();
+
+            number_trna.sort();
+            number_trna.dedup();
+
+            // print the stats
+            println!(
+                "# contig: {}\n# % core genes present: {:.2}\n# % tRNA genes present: {:.2}",
+                contig,
+                (number_core.len() as f32 / (number_core_genes) as f32) * 100.0,
+                (number_trna.len() as f32 / (number_trna_genes) as f32) * 100.0
+            );
+        }
+    }
+
     /// Takes an output string for the file name, and creates an HTML output
     /// with an embedded SVG element showing the plot.
     pub fn plot(&self, output: PathBuf) -> Result<(), Box<dyn std::error::Error>> {

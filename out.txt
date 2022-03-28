@@ -1,3 +1,18 @@
+# contig: Malus_domestica-mito_chloro.drMalDome10-BOTH.HiFiMapped.bam.filtered.1k
+# % core genes present: 87.80
+# % tRNA genes present: 64.52
+# contig: Malus_domestica-mito_chloro.drMalDome11-drMalDome11.HiFiMapped.bam.filtered.5k
+# % core genes present: 87.80
+# % tRNA genes present: 64.52
+# contig: Malus_domestica-mito_chloro.drMalDome5-MN964891.1.NC_053735.1.fasta.BOTH.HiFiMapped.bam.filtered.1k
+# % core genes present: 87.80
+# % tRNA genes present: 64.52
+# contig: Malus_domestica-mito_chloro.drMalDome58-MN964891.1.NC_053735.1.fasta.BOTH.HiFiMapped.bam.filtered.1k
+# % core genes present: 87.80
+# % tRNA genes present: 64.52
+# contig: Malus_sylvestris-mito_chloro.drMalSylv7-MW057419.2.NC_053735.1.fasta.BOTH.HiFiMapped.bam.filtered.5k
+# % core genes present: 87.80
+# % tRNA genes present: 64.52
 Mitogene	Malus_domestica-mito_chloro.drMalDome10-BOTH.HiFiMapped.bam.filtered.1k	Malus_domestica-mito_chloro.drMalDome11-drMalDome11.HiFiMapped.bam.filtered.5k	Malus_domestica-mito_chloro.drMalDome5-MN964891.1.NC_053735.1.fasta.BOTH.HiFiMapped.bam.filtered.1k	Malus_domestica-mito_chloro.drMalDome58-MN964891.1.NC_053735.1.fasta.BOTH.HiFiMapped.bam.filtered.1k	Malus_sylvestris-mito_chloro.drMalSylv7-MW057419.2.NC_053735.1.fasta.BOTH.HiFiMapped.bam.filtered.5k
 Atp1	true	true	true	true	true	
 Atp4	true	true	true	true	true	

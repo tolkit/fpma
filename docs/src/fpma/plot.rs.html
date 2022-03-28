@@ -290,6 +290,63 @@
 <span id="288">288</span>
 <span id="289">289</span>
 <span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">MitoGene</span>, <span class="ident">Strand</span>};
 <span class="kw">use</span> <span class="ident">rand::Rng</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::BTreeMap</span>, <span class="ident">fs</span>, <span class="ident">io::Write</span>, <span class="ident">path::PathBuf</span>};
@@ -372,6 +429,63 @@
             <span class="ident">data</span>: <span class="ident">BTreeMap::new</span>(),
         }
     }
+    <span class="doccomment">/// Statistics on the plot data. Understand quickly the completeness</span>
+    <span class="doccomment">/// of each contig. There are a few shortcomings of the approach, but it</span>
+    <span class="doccomment">/// is quick and dirty.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">completeness_angiosperms</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="comment">// two genes in our set which are missing in (most/all) angiosperms</span>
+        <span class="kw">let</span> <span class="ident">core_angiosperm_missing</span> <span class="op">=</span> <span class="number">2</span>;
+        <span class="comment">// and tRNA missing from seed plants (which incl angiosperms)</span>
+        <span class="comment">// not sure how to filter this at the moment.</span>
+        <span class="kw">let</span> <span class="ident">trna_missing</span> <span class="op">=</span> <span class="number">0</span>;
+
+        <span class="comment">// number of core genes</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">core_genes</span> <span class="op">=</span> <span class="ident">MitoGene::iterator</span>()
+            .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="op">!</span><span class="ident">e</span>.<span class="ident">to_string</span>().<span class="ident">contains</span>(<span class="string">&quot;Trn&quot;</span>))
+            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+
+        <span class="ident">core_genes</span>.<span class="ident">sort</span>();
+        <span class="ident">core_genes</span>.<span class="ident">dedup</span>();
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">trna_genes</span> <span class="op">=</span> <span class="ident">MitoGene::iterator</span>()
+            .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">to_string</span>().<span class="ident">contains</span>(<span class="string">&quot;Trn&quot;</span>))
+            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+
+        <span class="ident">trna_genes</span>.<span class="ident">sort</span>();
+        <span class="ident">trna_genes</span>.<span class="ident">dedup</span>();
+
+        <span class="kw">let</span> <span class="ident">number_core_genes</span> <span class="op">=</span> <span class="ident">core_genes</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">core_angiosperm_missing</span>;
+        <span class="kw">let</span> <span class="ident">number_trna_genes</span> <span class="op">=</span> <span class="ident">trna_genes</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">trna_missing</span>;
+
+        <span class="kw">for</span> (<span class="ident">contig</span>, <span class="ident">genes</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">number_core</span> <span class="op">=</span> <span class="ident">genes</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="op">!</span><span class="ident">e</span>.<span class="ident">query_name</span>.<span class="ident">to_string</span>().<span class="ident">contains</span>(<span class="string">&quot;Trn&quot;</span>))
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">query_name</span>)
+                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+
+            <span class="ident">number_core</span>.<span class="ident">sort</span>();
+            <span class="ident">number_core</span>.<span class="ident">dedup</span>();
+
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">number_trna</span> <span class="op">=</span> <span class="ident">genes</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">query_name</span>.<span class="ident">to_string</span>().<span class="ident">contains</span>(<span class="string">&quot;Trn&quot;</span>))
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">query_name</span>)
+                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+
+            <span class="ident">number_trna</span>.<span class="ident">sort</span>();
+            <span class="ident">number_trna</span>.<span class="ident">dedup</span>();
+
+            <span class="comment">// print the stats</span>
+            <span class="macro">println!</span>(
+                <span class="string">&quot;# contig: {}\n# % core genes present: {:.2}\n# % tRNA genes present: {:.2}&quot;</span>,
+                <span class="ident">contig</span>,
+                (<span class="ident">number_core</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f32</span> <span class="op">/</span> (<span class="ident">number_core_genes</span>) <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">*</span> <span class="number">100.0</span>,
+                (<span class="ident">number_trna</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f32</span> <span class="op">/</span> (<span class="ident">number_trna_genes</span>) <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">*</span> <span class="number">100.0</span>
+            );
+        }
+    }
+
     <span class="doccomment">/// Takes an output string for the file name, and creates an HTML output</span>
     <span class="doccomment">/// with an embedded SVG element showing the plot.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">plot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">output</span>: <span class="ident">PathBuf</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">std::error::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {

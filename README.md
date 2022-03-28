@@ -4,7 +4,7 @@
     <img width="300" height="132" src="https://www.darwintreeoflife.org/wp-content/themes/dtol/dist/assets/gfx/dtol-logo-round.png">
 </p>
 
-Using a set of known genes (~43), we can predict how many of these occur in an angiosperm mitochondrial genome assembly. In this repository there is a set of HMM files (`fastas/hmms`) which describe these genes.
+Using a set of known genes (43 core + 31 tRNA), we can predict how many of these occur in an angiosperm mitochondrial genome assembly. In this repository there is a set of HMM files (`fastas/hmms`) which describe these genes.
 
 The executable here runs `nhmmer` on these genes across the mitochondrial genome of interest.
 
