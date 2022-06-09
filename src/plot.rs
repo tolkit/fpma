@@ -49,6 +49,19 @@ fn make_html(svg: String) -> String {
         var tooltip = document.getElementById('tooltip');
         tooltip.style.display = 'none';
     }}
+
+    function addTextOnClick(evt, text) {{
+        let svgNS = 'http://www.w3.org/2000/svg';
+        let newText = document.createElementNS(svgNS, 'text');
+        newText.setAttributeNS(null, 'x', evt.pageX - 18 + 'px');
+        newText.setAttributeNS(null, 'y', evt.pageY - 18 + 'px');
+        newText.setAttributeNS(null, 'font-size', '18');
+        newText.setAttributeNS(null, 'font-family', 'monospace');
+
+        let textNode = document.createTextNode(text);
+        newText.appendChild(textNode);
+        document.getElementById('textGroup').appendChild(newText);
+    }}
 </script>
 </html>
     ",
@@ -171,6 +184,7 @@ impl PlotData {
             </marker>
         </defs>
     {}
+    <g id='textGroup'></g>
     \
 </svg>",
             WIDTH, height, base_chroms
@@ -280,13 +294,15 @@ fn generate_plot_annotations(data: &PlotData) -> String {
                 format!("{:.7}", e_value)
             );
 
+            let mitogene_label = format!("\"{}\"", query_name);
+
             let gene_line = format!("
-                <line x1='{x1_scaled}' y1='{y_gene}' x2='{x2_scaled}' y2='{y_gene}' stroke='black' style = 'stroke-width: 3;' {marker} onmousemove='showTooltip(evt, {mitogene_plus_range});' onmouseout='hideTooltip();'/>"
+                <line x1='{x1_scaled}' y1='{y_gene}' x2='{x2_scaled}' y2='{y_gene}' stroke='black' style = 'stroke-width: 3;' {marker} onmousemove='showTooltip(evt, {mitogene_plus_range});' onmouseout='hideTooltip();' onclick='addTextOnClick(evt, {mitogene_label})'/>"
             );
 
             // because SVG markers don't trigger events for some reason...
             let circle_hover = format!(
-                "<circle r='5' fill='transparent' cx='{x2_scaled}' cy='{y_gene}' onmousemove='showTooltip(evt, {mitogene_plus_range});' onmouseout='hideTooltip();''></circle>"
+                "<circle r='5' fill='transparent' cx='{x2_scaled}' cy='{y_gene}' onmousemove='showTooltip(evt, {mitogene_plus_range});' onmouseout='hideTooltip();' onclick='addTextOnClick(evt, {mitogene_label})'></circle>"
             );
 
             base_chroms += &gene_line;
