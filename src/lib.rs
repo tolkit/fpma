@@ -540,13 +540,17 @@ impl Nhmmer {
                 .collect();
 
             print!("{}\t", mitogene);
+            // we collect as we don't want to print the last tab
+            let mut presence_string = String::new();
+
             for e in is_present {
                 match e {
-                    true => print!("true\t"),
-                    false => print!("false\t"),
+                    true => presence_string += "true\t",
+                    false => presence_string += "false\t",
                 }
             }
-            println!("")
+            presence_string.pop();
+            println!("{}", presence_string);
         }
 
         Ok(plot_data)
